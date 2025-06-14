@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 const CRITERIA = [
-  { label: "SPY current position", key: "spy", weight: 0.1 },
-  { label: "QQQ current position", key: "qqq", weight: 0.1 },
-  { label: "IWM current position", key: "iwm", weight: 0.1 },
-  { label: "High-Quality Setups", key: "highQuality", weight: 0.15 },
+  { label: "SPY current position", key: "spy", weight: 0.11 },
+  { label: "QQQ current position", key: "qqq", weight: 0.11 },
+  { label: "IWM current position", key: "iwm", weight: 0.11 },
+  { label: "High-Quality Setups", key: "highQuality", weight: 0.2 },
   { label: "Low-Quality Setups", key: "lowQuality", weight: 0.05 },
   { label: "Distance from Moving Averages", key: "maDistance", weight: 0.1 },
   { label: "Breakouts Follow-Through (Last 5 Days)", key: "breakouts", weight: 0.15 },
-  { label: "Setup Visibility (Are they screaming?)", key: "screaming", weight: 0.15 },
+  { label: "Setup Visibility (Are they screaming?)", key: "screaming", weight: 0.17 },
 ];
 
 function MarketGrader() {
