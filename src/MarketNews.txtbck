@@ -1,0 +1,59 @@
+import React, { useEffect, useState } from "react";
+
+const API_KEY = "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"; // Replace with your real key before deploying
+
+function MarketNews() {
+  const [news, setNews] = useState([]);
+  const [lastFetched, setLastFetched] = useState(null);
+
+  const fetchNews = async () => {
+    try {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: "What were the most important news (Stock market related) that happened in the last 24 hours?",
+            },
+          ],
+          temperature: 0.7,
+        }),
+      });
+
+      const data = await response.json();
+      const reply = data.choices?.[0]?.message?.content || "No response";
+      setNews((prev) => [reply, ...prev]);
+      setLastFetched(new Date().toLocaleString());
+    } catch (err) {
+      setNews(["Error fetching news."]);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews();
+    const interval = setInterval(fetchNews, 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ maxWidth: 700, margin: "auto", padding: "2rem" }}>
+      <h2>📰 Market News (Last 24 Hours)</h2>
+      <p><strong>Last updated:</strong> {lastFetched}</p>
+      <ul>
+        {news.map((item, index) => (
+          <li key={index} style={{ marginBottom: "1rem", background: "#f1f1f1", padding: "1rem", borderRadius: "8px" }}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default MarketNews;
